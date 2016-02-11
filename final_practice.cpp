@@ -112,7 +112,7 @@ void animate(int value)
    {
       latAngle += 5.0;
       if (latAngle > 360.0) latAngle -= 360.0;
-      longAngle += 1.0;
+      longAngle += 5.0;
       if (longAngle > 360.0) longAngle -= 360.0;
 
       glutPostRedisplay();
@@ -254,19 +254,35 @@ void drawScene()
    // Sphere.3 - electron
    glTranslatef(4.0, 0.0, 0.0);
    glutSolidSphere( 0.3, 150, 150);
-
-
    glTranslatef(-4.0, 0.0, 0.0); // center the spin
+
    glRotatef(120, 0.0, 1.0, 0.0);
 
    glTranslatef(2, 0.0, 0.0);
    glutSolidSphere( 0.3, 150, 150);
-
    glTranslatef(-2.0, 0.0, 0.0); // center the spin
+
    glRotatef(120, 0.0, 1.0, 0.0);
 
    glTranslatef(6.0, 0.0, 0.0);
+   glutSolidSphere(0.3, 150, 150);
+
+   glTranslatef(-6.0, 0.0, 0.0); // center the spin
+   glRotatef(-latAngle, 0.0, 1.0, 0.0); //Base rotation Y centered
+
+
+   // Rotation X
+   glRotatef(longAngle, 1.0, 0.0, 0.0); //Base rotation X
+
+   glTranslatef(0.0, 5.0, 0.0);
    glutSolidSphere( 0.3, 150, 150);
+   glTranslatef(0.0, -5.0, 0.0); // center the spin
+
+   glRotatef(180, 1.0, 0.0, 0.0);
+
+   glTranslatef(0.0, 3.0, 0.0);
+   glutSolidSphere( 0.3, 150, 150);
+   glTranslatef(0.0, -3.0, 0.0);
 
 
    glutSwapBuffers();
@@ -360,7 +376,7 @@ int main(int argc, char **argv)
    //glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
    
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); 
-   glutInitWindowSize (500, 500);
+   glutInitWindowSize (1024, 1024);
    glutInitWindowPosition (100, 100);
    glutCreateWindow ("elementsTableMain.cpp");
    glutDisplayFunc(drawScene);
