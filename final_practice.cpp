@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////////////////
+// lightAndMaterial1.cpp
+//
+// This program draws a blue sphere lit by two positional lights, one white and one green,
+// the location of each shown by a smaller wire sphere. Various material properties of the
+// sphere can be controlled and also the distance attenuation of the light.
+//
+// Interaction:
+// Press 'a/A' to decrease/increase the sphere's blue ambient reflectance.
+// Press 'd/D' to decrease/increase the sphere's blue diffuse reflectance.
+// Press 's/S' to decrease/increase the sphere's white specular reflectance.
+// Press 'h/H' to decrease/increase the sphere's shininess.
+// Press 'e/E' to decrease/increase the sphere's blue emittance.
+// Press 't/T' to decrease/increase the quadratic attenuation parameter.
+// Press the up/down arrow keys to move the sphere.
+//
+// Sumanta Guha.
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
 #include <iostream>
 #include <ostream>
 #include <fstream>
@@ -268,6 +288,8 @@ void drawScene()
     
     glTranslatef(-1.1, 0.0, 0.0); // Move the sphere.
     glutSolidSphere( 0.6, 200, 200);
+    glTranslatef(-1.1, 1.0, 0.0); // Move the sphere. //Lo pongo en el mismo sitio y lo bajo (para que no se una con el otro protón)
+    glutSolidSphere( 0.6, 200, 200);
     
     
     // Create neutrons
@@ -287,6 +309,8 @@ void drawScene()
     
     //Aqui debe haber un bucle
     glTranslatef(1.1, 0.0, 0.0); // Move the sphere.
+    glutSolidSphere( 0.6, 200, 200);
+    glTranslatef(-1.0, -1.0, 0.0); // Move the sphere. //Lo pongo donde el protón y lo bajo (para que no se una al neutrón).
     glutSolidSphere( 0.6, 200, 200);
     
     // System centered
@@ -316,13 +340,13 @@ void drawScene()
     glRotatef(120, 0.0, 1.0, 0.0);
     
     glTranslatef(2, 0.0, 0.0);
-    glutSolidSphere( 0.3, 150, 150);
+    //glutSolidSphere( 0.3, 150, 150);
     glTranslatef(-2.0, 0.0, 0.0); // center the spin
     
     glRotatef(120, 0.0, 1.0, 0.0);
     
     glTranslatef(6.0, 0.0, 0.0);
-    glutSolidSphere(0.3, 150, 150);
+    //glutSolidSphere(0.3, 150, 150);
     
     glTranslatef(-6.0, 0.0, 0.0); // center the spin
     glRotatef(-latAngle, 0.0, 1.0, 0.0); //Base rotation Y centered
@@ -338,7 +362,7 @@ void drawScene()
     glRotatef(180, 1.0, 0.0, 0.0);
     
     glTranslatef(0.0, 3.0, 0.0);
-    glutSolidSphere( 0.3, 150, 150);
+    //glutSolidSphere( 0.3, 150, 150);
     glTranslatef(0.0, -3.0, 0.0);
     
     
