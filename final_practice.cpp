@@ -17,6 +17,7 @@
 // Sumanta Guha.
 /////////////////////////////////////////////////////////////////////////////////////////// 
 
+
 #include <iostream>
 #include <fstream>
 
@@ -49,6 +50,14 @@ static float t = 0.0; // Quadratic attenuation factor.
 static float zMove = 0.0; // z-direction component.
 static char theStringBuffer[10]; // String buffer.
 static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection.
+
+
+struct elenemt{
+    string name;
+    int protons;
+    int neutrons;
+    int electrons;
+};
 
 // Routine to draw a bitmap character string.
 void writeBitmapString(void *font, char *string)
@@ -153,14 +162,17 @@ void setup(void)
    // Cull back faces.
    glEnable(GL_CULL_FACE);
    glCullFace(GL_BACK);
+
+//   ElementosQuimicosBD elementos = ElementosQuimicosBD();
+//   elementos.loadBD(); //Cargamos los 30 elementos
+
 }
 
 // Drawing routine.
 void drawScene()
 {  
 
-
-   // Light position vectors.	
+    // Light position vectors.
    float lightPos0[] = { 0.0, 2.0, 2.5, 1.0 };
    float lightPos1[] = { 1.0, 2.0, 0.0, 1.0 };
 
@@ -369,6 +381,7 @@ void printInteraction(void)
 // Main routine.
 int main(int argc, char **argv) 
 {
+
    printInteraction();
    glutInit(&argc, argv);
  

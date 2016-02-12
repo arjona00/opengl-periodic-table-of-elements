@@ -6,23 +6,23 @@
 //  Copyright © 2016 Tatiana Person Montero. All rights reserved.
 //
 
-#include<iostream>
+#include <iostream>
 
 using namespace std;
 
 class ElementoQuimico {
 
     private: //Declaración de los atributos
-    
+
         int protones, electrones, neutrones, numeroAtomico;
         string nombre, simbolo;
-    
+
     public: //Métodos de acceso a los atributos
-    
+
     ElementoQuimico(string nombre, string simbolo, int protones, int eletrones, int neutrones, int numeroAtomico);
-    
+
     ElementoQuimico() {}
-    
+
     inline int getProtones() { return protones; }
     inline int getElectrones() { return electrones; }
     inline int getNeutrones() { return electrones; }
@@ -35,16 +35,16 @@ class ElementoQuimico {
     inline void setNumeroAtomico(int numeroAtomico) { this->numeroAtomico = numeroAtomico; }
     inline void setNombre(string nombre) { this->nombre = nombre; }
     inline void setSimbolo(string simbolo) { this->simbolo = simbolo; }
-    
+
 };
 
 ElementoQuimico::ElementoQuimico(string nombre, string simbolo, int protones, int electrones, int neutrones, int numeroAtomico) {
-    
+
     this->nombre = nombre;
     this->simbolo = simbolo;
     this->protones = protones;
     this->electrones = electrones;
     this->neutrones = neutrones;
     this->numeroAtomico = numeroAtomico;
-    
+
 }
