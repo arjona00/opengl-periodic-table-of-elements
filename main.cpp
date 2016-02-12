@@ -22,5 +22,14 @@ int main(int argc, const char * argv[]) {
     cout << "Size: " << elementos.size() << endl;
     cout << "Empty? " << elementos.empty() << endl;
     
+    //Tests para la masa atomica y número de neutrones:
+    for(int i=0; i<elementos.size(); i++) {
+        cout << "-------------------------------------------------------" << endl;
+        cout << "Nombre: " << elementos.getElemento(i).getNombre() << endl;
+        cout << "Masa atómica sin redondear: " << elementos.getElemento(i).getMasaAtomica() << endl;
+        cout << "Masa atómica redondeada: " << round(elementos.getElemento(i).getMasaAtomica()) << endl;
+        cout << "Neutrones: " << elementos.getElemento(i).getNeutrones() << endl;
+    }
+    
     return 0;
 }
