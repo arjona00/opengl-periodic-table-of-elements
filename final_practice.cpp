@@ -152,7 +152,7 @@ void writeData(void)
     
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(1.0, 0.95, -2);
-    string numeroAtomico = "Masa atomica: " + toString(helio.getNumeroAtomico());
+    sstring numeroAtomico = "Numero atomico: " + toString(helio.getNumeroAtomico());
     writeBitmapString((void*)font, convertString(numeroAtomico));
     
     floatToString(theStringBuffer, 4, t);
