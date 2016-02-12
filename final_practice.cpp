@@ -30,7 +30,6 @@
 #  include <GL/glext.h>
 #pragma comment(lib, "glew32.lib")
 #endif
-#include <vector>
 
 using namespace std;
 
@@ -40,7 +39,6 @@ static float longAngle = 0.0; // Longitudinal angle.
 static float Xangle = 0.0, Yangle = 0.0, Zangle = 0.0; // Angles to rotate scene.
 static int isAnimate = 0; // Animated?
 static int animationPeriod = 100; // Time interval between frames.
-vector<string> elementos;
 
 static float a = 1.0; // Blue ambient reflectance.
 static float d = 1.0; // Blue diffuse reflectance.
@@ -157,6 +155,61 @@ void setup(void)
    glCullFace(GL_BACK);
 }
 
+void paintElectrons (int amount)
+{
+    if (amount != 0)
+    {
+        //Layer 1
+        if (amount > 0)
+        {
+            glTranslatef(4.0, 0.0, 0.0);
+            glTranslatef(4.0, 0.0, 0.0);
+            glutSolidSphere( 0.3, 150, 150);
+            glTranslatef(-4.0, 0.0, 0.0); // center the spin
+            glRotatef(120, 0.0, 1.0, 0.0);
+            amount--;
+        }
+
+        if (amount > 0)
+        {
+            glTranslatef(2, 0.0, 0.0);
+            glutSolidSphere( 0.3, 150, 150);
+            glTranslatef(-2.0, 0.0, 0.0); // center the spin
+            glRotatef(120, 0.0, 1.0, 0.0);
+            amount--;
+            }
+
+        //Layer 2
+        if (amount > 0)
+        {
+            glTranslatef(6.0, 0.0, 0.0);
+            glutSolidSphere(0.3, 150, 150);
+            glTranslatef(-6.0, 0.0, 0.0); // center the spin
+            glRotatef(-latAngle, 0.0, 1.0, 0.0); //Base rotation Y centered
+            amount--;
+            }
+
+        if (amount > 0)
+        {
+            // Rotation X
+            glRotatef(longAngle, 1.0, 0.0, 0.0); //Base rotation X
+            glTranslatef(0.0, 5.0, 0.0);
+            glutSolidSphere( 0.3, 150, 150);
+            glTranslatef(0.0, -5.0, 0.0); // center the spin
+            amount--;
+        }
+
+        if (amount > 0)
+        {
+            glRotatef(180, 1.0, 0.0, 0.0);
+            glTranslatef(0.0, 3.0, 0.0);
+            glutSolidSphere( 0.3, 150, 150);
+            glTranslatef(0.0, -3.0, 0.0);
+            amount--;
+        }
+    }
+}
+
 // Drawing routine.
 void drawScene()
 {
@@ -254,38 +307,7 @@ void drawScene()
    glMaterialfv(GL_FRONT, GL_EMISSION, matEmission3);
 
    // Sphere.3 - electron
-   glTranslatef(4.0, 0.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(-4.0, 0.0, 0.0); // center the spin
-
-   glRotatef(120, 0.0, 1.0, 0.0);
-
-   glTranslatef(2, 0.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(-2.0, 0.0, 0.0); // center the spin
-
-   glRotatef(120, 0.0, 1.0, 0.0);
-
-   glTranslatef(6.0, 0.0, 0.0);
-   glutSolidSphere(0.3, 150, 150);
-
-   glTranslatef(-6.0, 0.0, 0.0); // center the spin
-   glRotatef(-latAngle, 0.0, 1.0, 0.0); //Base rotation Y centered
-
-
-   // Rotation X
-   glRotatef(longAngle, 1.0, 0.0, 0.0); //Base rotation X
-
-   glTranslatef(0.0, 5.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(0.0, -5.0, 0.0); // center the spin
-
-   glRotatef(180, 1.0, 0.0, 0.0);
-
-   glTranslatef(0.0, 3.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(0.0, -3.0, 0.0);
-
+   paintElectrons (4);
 
    glutSwapBuffers();
 }
