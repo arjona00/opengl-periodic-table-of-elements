@@ -1,29 +1,15 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-// lightAndMaterial1.cpp
-//
-// This program draws a blue sphere lit by two positional lights, one white and one green,
-// the location of each shown by a smaller wire sphere. Various material properties of the
-// sphere can be controlled and also the distance attenuation of the light.
-//
-// Interaction:
-// Press 'a/A' to decrease/increase the sphere's blue ambient reflectance.
-// Press 'd/D' to decrease/increase the sphere's blue diffuse reflectance.
-// Press 's/S' to decrease/increase the sphere's white specular reflectance.
-// Press 'h/H' to decrease/increase the sphere's shininess.
-// Press 'e/E' to decrease/increase the sphere's blue emittance.
-// Press 't/T' to decrease/increase the quadratic attenuation parameter.
-// Press the up/down arrow keys to move the sphere.
-//
-// Sumanta Guha.
-///////////////////////////////////////////////////////////////////////////////////////////
-
-
 #include <iostream>
+#include <ostream>
 #include <fstream>
+#include <string>
+#include <sstream>
+#include "ElementosQuimicosBD.h"
+
+using namespace std;
 
 #ifdef __APPLE__
-#  include <GL/glew.h>
-#  include <GL/freeglut.h>
+#  include <OpenGL/gl3.h>
+#  include <GLUT/glut.h>
 #  include <OpenGL/glext.h>
 #else
 #  include <GL/glew.h>
@@ -50,7 +36,9 @@ static float t = 0.0; // Quadratic attenuation factor.
 static float zMove = 0.0; // z-direction component.
 static char theStringBuffer[10]; // String buffer.
 static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection.
-
+static ElementosQuimicosBD elementos;
+//Para las pruebas vamos a usar el Helio (que tiene algo más que el hidrógeno).
+static ElementoQuimico helio;
 
 struct elenemt{
     string name;
@@ -58,6 +46,28 @@ struct elenemt{
     int neutrons;
     int electrons;
 };
+
+//Convert int to string
+string toString(int i) {
+    ostringstream os;
+    os << i;
+    return os.str();
+}
+
+//Convert float to string
+string toString(float f) {
+    ostringstream os;
+    os << f;
+    return os.str();
+}
+
+//Convert string to char* writable
+char* convertString(string s) {
+    char * writable = new char[s.size() + 1];
+    std::copy(s.begin(), s.end(), writable);
+    writable[s.size()] = '\0';
+    return writable;
+}
 
 // Routine to draw a bitmap character string.
 void writeBitmapString(void *font, char *string)
@@ -109,6 +119,41 @@ void writeData(void)
     glRasterPos3f(-1.0, 0.8, -2.0);
     writeBitmapString((void*)font, "Quadratic attenuation: ");
     writeBitmapString((void*)font, theStringBuffer);
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 1.05, -2);
+    string nombreElemento = "Elemento quimico: " + helio.getNombre();
+    writeBitmapString((void*)font, convertString(nombreElemento));
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 1.0, -2);
+    string simbolo = "Simbolo: " + helio.getSimbolo();
+    writeBitmapString((void*)font, convertString(simbolo));
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 0.95, -2);
+    string numeroAtomico = "Masa atomica: " + toString(helio.getNumeroAtomico());
+    writeBitmapString((void*)font, convertString(numeroAtomico));
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 0.9, -2);
+    string masa = "Masa atomica: " + toString(helio.getMasaAtomica());
+    writeBitmapString((void*)font, convertString(masa));
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 0.85, -2);
+    string protones = "Protones: " + toString(helio.getProtones());
+    writeBitmapString((void*)font, convertString(protones));
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 0.8, -2);
+    string electrones = "Electrones: " + toString(helio.getElectrones());
+    writeBitmapString((void*)font, convertString(electrones));
+    
+    floatToString(theStringBuffer, 4, t);
+    glRasterPos3f(1.0, 0.75, -2);
+    string neutrones = "Neutrones: " + toString(helio.getNeutrones());
+    writeBitmapString((void*)font, convertString(neutrones));
     
     glEnable(GL_LIGHTING); // Re-enable lighting.
 }
@@ -240,9 +285,9 @@ void drawScene()
     glMaterialfv(GL_FRONT, GL_SHININESS, matShine2);
     glMaterialfv(GL_FRONT, GL_EMISSION, matEmission2);
     
+    //Aqui debe haber un bucle
     glTranslatef(1.1, 0.0, 0.0); // Move the sphere.
     glutSolidSphere( 0.6, 200, 200);
-    
     
     // System centered
     glTranslatef(-0.55, 0.0, 0.0);
@@ -382,13 +427,19 @@ void printInteraction(void)
 int main(int argc, char **argv)
 {
     
+    //Instanciamos los elementos:
+    elementos = ElementosQuimicosBD();
+    //Cargamos los elementos químicos:
+    elementos.loadBD();
+    helio = elementos.getElemento(1); //Cogemos el helio de la lista que es el 2º
+    
     printInteraction();
     glutInit(&argc, argv);
     
     //glutInitContextVersion(4, 3);
     //glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
     
-    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); 
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize (1024, 1024);
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("elementsTableMain.cpp");
@@ -400,7 +451,7 @@ int main(int argc, char **argv)
     //glewExperimental = GL_TRUE;
     //glewInit();
     
-    setup(); 
+    setup();
     
     glutMainLoop();
 }
