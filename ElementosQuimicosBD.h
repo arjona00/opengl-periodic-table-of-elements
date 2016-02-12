@@ -105,7 +105,7 @@ void ElementosQuimicosBD::loadBD() {
     cout << "Sodio OK." << endl;
     
     cout << "12 - Magnesio: " << endl;
-    ElementoQuimico magnesio = ElementoQuimico("Magnesio", "Ng", 12, 12, 24.3050, 12);
+    ElementoQuimico magnesio = ElementoQuimico("Magnesio", "Mg", 12, 12, 24.3050, 12);
     addElemento(magnesio);
     cout << "Magnesio OK." << endl;
     
