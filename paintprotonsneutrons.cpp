@@ -1,24 +1,71 @@
 #include "paintprotonsneutrons.h"
 
 
-
-void paintProtons (int protonsAmount, float size){
-    //Aqui debe haber un bucle
-   glTranslatef(-1.1, 0.0, 0.0); // Move the sphere.
-   glutSolidSphere( 0.6, 200, 200);
-   glTranslatef(-1.1, 1.0, 0.0); // Move the sphere. //Lo pongo en el mismo sitio y lo bajo (para que no se una con el otro protón)
-   glutSolidSphere( 0.6, 200, 200);
-   glTranslatef(2.2, 0.0, 0.0);
+void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float size, float positionXref, float positionYref, float positionZref, int protonsDrawed) {
+    
+    //Caso base
+    if(protonsAmount > 0) {
+        lightMaterialProtons();
+        //Coloco el central y lo resto
+        glTranslatef(positionXref, positionYref, positionZref);
+        glutSolidSphere(size, 100, 100);
+        glTranslatef(positionXref * -1, positionYref * -1, positionZref * -1);
+        protonsAmount = protonsAmount - 1;
+        protonsDrawed = protonsDrawed + 1;
+            
+        while(neutronsAmount > 0) {
+            //Neutron izquierda
+            lightMaterialNeutrons();
+            glTranslatef(positionXref - 0.6, positionYref - 0.8, positionZref);
+            glutSolidSphere(size, 100, 100);
+            glTranslatef((positionXref - 0.6) * -1, (positionYref - 0.8) * - 1, positionZref * -1);
+            neutronsAmount = neutronsAmount - 1;
+            
+            if(neutronsAmount > 0) {
+                //Neutron a la derecha
+                lightMaterialNeutrons();
+                glTranslatef(positionXref - 0.5, positionYref + 0.8, positionZref);
+                glutSolidSphere(size, 100, 100);
+                glTranslatef((positionXref - 0.5) * -1, (positionYref + 0.8) * - 1, positionZref * -1);
+                neutronsAmount = neutronsAmount - 1;
+            }
+            
+            if(neutronsAmount > 0) {
+                
+                //Neutron arriba
+                lightMaterialNeutrons();
+                glTranslatef(positionXref - 0.9, positionYref - 1.8, positionZref);
+                glutSolidSphere(size, 100, 100);
+                glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.8) * - 1, positionZref * -1);
+                neutronsAmount = neutronsAmount - 1;
+            }
+            
+            //Llamamos para que pinte protones alrededor
+            paintProtonsAndNeutronsRec(protonsAmount-protonsDrawed, neutronsAmount, size, (positionXref - 0.6) + 1.1, (positionYref - 0.8), positionZref + 0.6, protonsDrawed);
+        }
+        
+        //Llamamos para que pinte los protones restantes
+        paintProtonsAndNeutronsRec(protonsAmount-(protonsDrawed-1), neutronsAmount, size, (positionXref - 0.6) - 0.5, (positionYref - 0.1), positionZref, protonsDrawed);
+            
+    } else if(neutronsAmount > 0) {
+        lightMaterialNeutrons();
+        //Coloco el central y lo resto (en este caso sabemos que no hay protones)
+        glTranslatef((positionXref - 0.6), (positionYref - 0.2), positionZref);
+        glutSolidSphere(size, 100, 100);
+        glTranslatef((positionXref - 0.6) * -1, (positionYref - 0.2) * -1, positionZref * -1);
+        neutronsAmount = neutronsAmount - 1;
+    }
 }
 
-void paintNeutrons (int neutronsAmount, float size){
-    //Aqui debe haber un bucle
-    glTranslatef(-2.2, 0.0, 0.0);
-    glTranslatef(1.1, 0.0, 0.0); // Move the sphere.
-    glutSolidSphere( 0.6, 200, 200);
-    glTranslatef(-1.0, -1.0, 0.0); // Move the sphere. //Lo pongo donde el protón y lo bajo (para que no se una al neutrón).
-    glutSolidSphere( 0.6, 200, 200);
+
+void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) {
+    
+    //En este caso solo llamamos para pintar el primero en la posición inicial
+    
+    paintProtonsAndNeutronsRec(protonsAmount, neutronsAmount, size, -1.0, 0.0, 0.0, 0);
+
 }
+
 
 void lightMaterialProtons(){
 

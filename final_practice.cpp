@@ -17,7 +17,6 @@
 // Sumanta Guha.
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-
 #include <iostream>
 #include <ostream>
 #include <fstream>
@@ -29,7 +28,7 @@
 #  include <GLUT/glut.h>
 #  include <OpenGL/glext.h>
 #else
-//#  include <GL/glew.h>
+#  include <GL/glew.h>
 #  include <GL/freeglut.h>
 #  include <GL/glext.h>
 #pragma comment(lib, "glew32.lib")
@@ -108,7 +107,7 @@ void floatToString(char * destStr, int precision, float val)
 // Write data.
 void writeData(void)
 {
-
+    
     glDisable(GL_LIGHTING); // Disable lighting.
     glColor3f(1.0, 1.0, 1.0);
     
@@ -203,73 +202,66 @@ void setup(void)
 }
 
 void createLights(){
-
+    
     // Light position vectors.
-   float lightPos0[] = { 0.0, 2.0, 2.5, 1.0 };
-   float lightPos1[] = { 1.0, 2.0, 0.0, 1.0 };
-
-   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glLoadIdentity();
-   writeData();
-   glTranslatef(0.0, 0.0, -8.0);
-
-   // Rotate scene.
-   glRotatef(Zangle, 0.0, 0.0, 1.0);
-   glRotatef(Yangle, 0.0, 1.0, 0.0);
-   glRotatef(Xangle, 1.0, 0.0, 0.0);
-
-
-   // Light quadratic attenuation factor.
-   glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, t);
-   glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, t);
-
-   gluLookAt(0.0, 3.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-
-   // Draw light source spheres after disabling lighting.
-   glDisable(GL_LIGHTING);
-
-   // Light0 and its sphere positioned.
-   glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
-
-   // Light1 and its sphere positioned.
-   glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-
-   glEnable(GL_LIGHTING);
+    float lightPos0[] = { 0.0, 2.0, 2.5, 1.0 };
+    float lightPos1[] = { 1.0, 2.0, 0.0, 1.0 };
+    
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    writeData();
+    glTranslatef(0.0, 0.0, -8.0);
+    
+    // Rotate scene.
+    glRotatef(Zangle, 0.0, 0.0, 1.0);
+    glRotatef(Yangle, 0.0, 1.0, 0.0);
+    glRotatef(Xangle, 1.0, 0.0, 0.0);
+    
+    
+    // Light quadratic attenuation factor.
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, t);
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, t);
+    
+    gluLookAt(0.0, 3.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    
+    // Draw light source spheres after disabling lighting.
+    glDisable(GL_LIGHTING);
+    
+    // Light0 and its sphere positioned.
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+    
+    // Light1 and its sphere positioned.
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+    
+    glEnable(GL_LIGHTING);
 }
 
 // Drawing routine.
 void drawScene()
 {
-
-   createLights();
-
-   /*
-    Muy importante, si vais a pintar algo usar primero glTranslatef para colocar en la posición deseada, luego pintais el objeto
-    y luego centrar con otro glTranslatef negativo. Si no hacemos esto es muy difícil centrar después las órbitas ya que los traslados glTranslatef se acumulan
-    */
-
-   lightMaterialProtons();
-
-   glTranslatef(0.55, 0.0, 0.0); //Este ayuda a tener el sistema siempre centrado. Ahora mismo al meter más protones y neutrones no lo está
-
-   paintProtons(elementoActual.getProtones(), 0.6);
-
-   //glTranslatef(-0.55, 0.0, 0.0); // Después de pintar los protones centramos el sistema
-
-   lightMaterialNeutrons();
-
-   //glTranslatef(-0.55, 0.0, 0.0); // Desplazamiento previo a pintar los neutrones para que esté centrado
-
-   paintNeutrons(elementoActual.getNeutrones(), 0.6);
-
-   glTranslatef(-0.55, 0.0, 0.0); // Centra el sistema después de pintar los neutrones
-
-   // Sphere.3 - electron
-   float angles[3] = {latAngle, longAngle, longAngle};
-   paintElectrons(elementoActual.getElectrones(), 0.2, angles );
-
-   glutSwapBuffers();
-
+    
+    createLights();
+    
+    /*
+     Muy importante, si vais a pintar algo usar primero glTranslatef para colocar en la posición deseada, luego pintais el objeto
+     y luego centrar con otro glTranslatef negativo. Si no hacemos esto es muy difícil centrar después las órbitas ya que los traslados glTranslatef se acumulan
+     */
+    
+    glTranslatef(0.55, 0.0, 0.0); //Este ayuda a tener el sistema siempre centrado. Ahora mismo al meter más protones y neutrones no lo está
+    
+    
+    //Llamamos a la función que pinta los neutrones y protones según el número
+    
+    paintProtonsAndNeutrons(elementoActual.getProtones(), elementoActual.getNeutrones(), 0.6);
+    
+    glTranslatef(0.55, 0.0, 0.0); // Centra el sistema después de pintar los neutrones
+    
+    // Sphere.3 - electron
+    float angles[3] = {latAngle, longAngle, longAngle};
+    paintElectrons(elementoActual.getElectrones(), 0.2, angles );
+    
+    glutSwapBuffers();
+    
 }
 
 // OpenGL window reshape routine.
@@ -358,7 +350,7 @@ int main(int argc, char **argv)
     elementos = ElementosQuimicosBD();
     //Cargamos los elementos químicos:
     elementos.loadBD();
-    elementoActual = elementos.getElemento(1); //Cogemos el helio de la lista que es el 2º
+    elementoActual = elementos.getElemento(5); //Cogemos uno para las pruebas
     
     printInteraction();
     glutInit(&argc, argv);
