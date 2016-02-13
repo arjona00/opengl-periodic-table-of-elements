@@ -49,6 +49,9 @@ bool ElementosQuimicosBD::empty() {
 
 void ElementosQuimicosBD::loadBD() {
 
+    ElementoQuimico elemento_cero = ElementoQuimico("---", "---", 0, 0, 0, 0);
+    addElemento(elemento_cero);
+
     cout << "1 - Hidrógeno: " << endl;
     ElementoQuimico hidrogeno = ElementoQuimico("Hidrógeno", "H", 1, 1, 1.00794, 1);
     addElemento(hidrogeno);

@@ -20,9 +20,9 @@ class ElementoQuimico {
         string nombre, simbolo;
 
         float masaAtomica;
-    
+
     public: //Métodos de acceso a los atributos
-    
+
     ElementoQuimico(string nombre, string simbolo, int protones, int eletrones, float masaAtomica, int numeroAtomico);
 
     ElementoQuimico() {}

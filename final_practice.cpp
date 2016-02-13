@@ -94,7 +94,7 @@ char* convertString(string s) {
 void writeBitmapString(void *font, char *string)
 {
     char *c;
-    
+
     for (c = string; *c != '\0'; c++) glutBitmapCharacter(font, *c);
 }
 
@@ -111,43 +111,43 @@ void writeData(void)
 
     glDisable(GL_LIGHTING); // Disable lighting.
     glColor3f(1.0, 1.0, 1.0);
-    
-    
+
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 1.05, -2);
     string nombreElemento = "Elemento quimico: " + elementoActual.getNombre();
     writeBitmapString((void*)font, convertString(nombreElemento));
-    
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 1.0, -2);
     string simbolo = "Simbolo: " + elementoActual.getSimbolo();
     writeBitmapString((void*)font, convertString(simbolo));
-    
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 0.95, -2);
     string numeroAtomico = "Numero atomico: " + toString(elementoActual.getNumeroAtomico());
     writeBitmapString((void*)font, convertString(numeroAtomico));
-    
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 0.9, -2);
     string masa = "Masa atomica: " + toString(elementoActual.getMasaAtomica());
     writeBitmapString((void*)font, convertString(masa));
-    
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 0.85, -2);
     string protones = "Protones: " + toString(elementoActual.getProtones());
     writeBitmapString((void*)font, convertString(protones));
-    
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 0.8, -2);
     string electrones = "Electrones: " + toString(elementoActual.getElectrones());
     writeBitmapString((void*)font, convertString(electrones));
-    
+
     floatToString(theStringBuffer, 4, t);
     glRasterPos3f(-1.0, 0.75, -2);
     string neutrones = "Neutrones: " + toString(elementoActual.getNeutrones());
     writeBitmapString((void*)font, convertString(neutrones));
-    
+
     glEnable(GL_LIGHTING); // Re-enable lighting.
 }
 
@@ -161,7 +161,7 @@ void animate(int value)
         if (latAngle > 360.0) latAngle -= 360.0;
         longAngle += 5.0;
         if (longAngle > 360.0) longAngle -= 360.0;
-        
+
         glutPostRedisplay();
         glutTimerFunc(animationPeriod, animate, 1);
     }
@@ -172,31 +172,31 @@ void setup(void)
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glEnable(GL_DEPTH_TEST); // Enable depth testing.
-    
+
     // Turn on OpenGL lighting.
     glEnable(GL_LIGHTING);
-    
+
     // Light property vectors.
     float lightAmb[] = { 0.0, 0.0, 0.0, 1.0 };
     float lightDifAndSpec0[] = { 0.8, 0.8, 0.8, 1.0 };
     float lightDifAndSpec1[] = { 0.0, 0.0, 0.3, 1.0 };
     float globAmb[] = { 0.2, 0.2, 0.2, 1.0 };
-    
+
     // Light0 properties.
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDifAndSpec0);
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightDifAndSpec0);
-    
+
     // Light1 properties.
     glLightfv(GL_LIGHT1, GL_AMBIENT, lightAmb);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDifAndSpec1);
     glLightfv(GL_LIGHT1, GL_SPECULAR, lightDifAndSpec1);
-    
+
     glEnable(GL_LIGHT0); // Enable particular light source.
     glEnable(GL_LIGHT1); // Enable particular light source.
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmb); // Global ambient light.
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE); // Enable local viewpoint
-    
+
     // Cull back faces.
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -285,6 +285,8 @@ void resize (int w, int h)
 // Keyboard input processing routine.
 void keyInput(unsigned char key, int x, int y)
 {
+    int id;
+
     switch (key)
     {
         case 27:
@@ -328,6 +330,20 @@ void keyInput(unsigned char key, int x, int y)
             if (Zangle < 0.0) Zangle += 360.0;
             glutPostRedisplay();
             break;
+        case '+':
+            id = elementoActual.getNumeroAtomico();
+            id++;
+            if (id > 30) id = 30;
+            elementoActual = elementos.getElemento(id);
+            glutPostRedisplay();
+            break;
+        case '-':
+            id = elementoActual.getNumeroAtomico();
+            id--;
+            if (id < 0) id = 0;
+            elementoActual = elementos.getElemento(id);
+            glutPostRedisplay();
+            break;
         default:
             break;
     }
@@ -347,38 +363,39 @@ void printInteraction(void)
     cout << "Interaction:" << endl;
     cout << "Press space to toggle between animation on and off." << endl
     << "Press the up/down arrow keys to speed up/slow down animation." << endl
-    << "Press the x, X, y, Y, z, Z keys to rotate the scene." << endl;
+    << "Press the x, X, y, Y, z, Z keys to rotate the scene." << endl
+    << "Press the + / - keys to switch between elements." << endl;
 }
 
 // Main routine.
 int main(int argc, char **argv)
 {
-    
+
     //Instanciamos los elementos:
     elementos = ElementosQuimicosBD();
     //Cargamos los elementos químicos:
     elementos.loadBD();
-    elementoActual = elementos.getElemento(1); //Cogemos el helio de la lista que es el 2º
-    
+    elementoActual = elementos.getElemento(0); //Cogemos el helio de la lista que es el 2º
+
     printInteraction();
     glutInit(&argc, argv);
-    
+
     //glutInitContextVersion(4, 3);
     //glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
-    
+
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-    glutInitWindowSize (1024, 1024);
+    glutInitWindowSize (500, 500);
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("elementsTableMain.cpp");
     glutDisplayFunc(drawScene);
     glutReshapeFunc(resize);
     glutKeyboardFunc(keyInput);
     glutSpecialFunc(specialKeyInput);
-    
+
     //glewExperimental = GL_TRUE;
     //glewInit();
-    
+
     setup();
-    
+
     glutMainLoop();
 }
