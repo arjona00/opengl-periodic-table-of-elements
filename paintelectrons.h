@@ -4,4 +4,4 @@
 #  include <GL/glext.h>
 #endif // PAINTELECTRONS_H
 
-void paintElectrons (int amount, float electronSize, float angles[3] );
+void paintElectrons (int electronAmount, float electronSize, float angles[3] );
