@@ -33,7 +33,7 @@
 #endif
 
 #include "ElementosQuimicosBD.h"
-
+#include "paintelectrons.h"
 
 using namespace std;
 
@@ -157,10 +157,6 @@ void setup(void)
    // Cull back faces.
    glEnable(GL_CULL_FACE);
    glCullFace(GL_BACK);
-
-   ElementosQuimicosBD elementos = ElementosQuimicosBD();
-   elementos.loadBD(); //Cargamos los 30 elementos
-
 }
 
 // Drawing routine.
@@ -241,56 +237,11 @@ void drawScene()
 
    // System centered
    glTranslatef(-0.55, 0.0, 0.0);
-   glRotatef(latAngle, 0.0, 1.0, 0.0); //Base rotation
 
-
-   // Create electrons
-
-   // Material properties of sphere 3 - electron.
-   float matAmb3[] = {0.18275f, 0.17f, 0.62525f, 1.0};
-   float matDif3[] = {0.332741f, 0.328634f, 0.746435f, 1.0};
-   float matSpec3[] = { 0.25, 0.13, 0.08, 1.0 };
-   float matShine3[] = { 2.3 };
-   float matEmission3[] = {0.0, 0.0, e, 1.0};
-   glMaterialfv(GL_FRONT, GL_AMBIENT, matDif3);
-   glMaterialfv(GL_FRONT, GL_DIFFUSE, matSpec3);
-   glMaterialfv(GL_FRONT, GL_SPECULAR, matAmb3);
-   glMaterialfv(GL_FRONT, GL_SHININESS, matShine3);
-   glMaterialfv(GL_FRONT, GL_EMISSION, matEmission3);
 
    // Sphere.3 - electron
-   glTranslatef(4.0, 0.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(-4.0, 0.0, 0.0); // center the spin
-
-   glRotatef(120, 0.0, 1.0, 0.0);
-
-   glTranslatef(2, 0.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(-2.0, 0.0, 0.0); // center the spin
-
-   glRotatef(120, 0.0, 1.0, 0.0);
-
-   glTranslatef(6.0, 0.0, 0.0);
-   glutSolidSphere(0.3, 150, 150);
-
-   glTranslatef(-6.0, 0.0, 0.0); // center the spin
-   glRotatef(-latAngle, 0.0, 1.0, 0.0); //Base rotation Y centered
-
-
-   // Rotation X
-   glRotatef(longAngle, 1.0, 0.0, 0.0); //Base rotation X
-
-   glTranslatef(0.0, 5.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(0.0, -5.0, 0.0); // center the spin
-
-   glRotatef(180, 1.0, 0.0, 0.0);
-
-   glTranslatef(0.0, 3.0, 0.0);
-   glutSolidSphere( 0.3, 150, 150);
-   glTranslatef(0.0, -3.0, 0.0);
-
+   float angles[3] = {latAngle, longAngle, longAngle};
+   paintElectrons(4, 0.2, angles );
 
    glutSwapBuffers();
 }
