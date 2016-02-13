@@ -14,6 +14,8 @@
 
 #endif // PAINTPROTONSNEUTRONS_H
 
+#include <iostream>
+
 void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size);
 void lightMaterialProtons();
 void lightMaterialNeutrons();

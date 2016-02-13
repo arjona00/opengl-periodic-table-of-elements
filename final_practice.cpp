@@ -277,6 +277,9 @@ void resize (int w, int h)
 // Keyboard input processing routine.
 void keyInput(unsigned char key, int x, int y)
 {
+    
+    int id;
+    
     switch (key)
     {
         case 27:
@@ -320,6 +323,20 @@ void keyInput(unsigned char key, int x, int y)
             if (Zangle < 0.0) Zangle += 360.0;
             glutPostRedisplay();
             break;
+        case '+':
+            id = elementoActual.getNumeroAtomico();
+            id++;
+            if (id > 30) id = 30;
+            elementoActual = elementos.getElemento(id);
+            glutPostRedisplay();
+            break;
+        case '-':
+            id = elementoActual.getNumeroAtomico();
+            id--;
+            if (id < 0) id = 0;
+            elementoActual = elementos.getElemento(id);
+            glutPostRedisplay();
+            break;
         default:
             break;
     }
@@ -350,7 +367,7 @@ int main(int argc, char **argv)
     elementos = ElementosQuimicosBD();
     //Cargamos los elementos químicos:
     elementos.loadBD();
-    elementoActual = elementos.getElemento(5); //Cogemos uno para las pruebas
+    elementoActual = elementos.getElemento(1); //Cogemos uno para las pruebas
     
     printInteraction();
     glutInit(&argc, argv);

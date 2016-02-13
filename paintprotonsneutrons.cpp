@@ -1,4 +1,7 @@
 #include "paintprotonsneutrons.h"
+#include<stdlib.h>
+
+using namespace std;
 
 
 void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float size, float positionXref, float positionYref, float positionZref, int protonsDrawed) {
@@ -12,8 +15,17 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
         glTranslatef(positionXref * -1, positionYref * -1, positionZref * -1);
         protonsAmount = protonsAmount - 1;
         protonsDrawed = protonsDrawed + 1;
+        
+        /*if(protonsAmount > 0) { //Ya se pintó el primero
+            glTranslatef(positionXref - 0.3, positionYref - 0.9, positionZref - 1);
+            glutSolidSphere(size, 100, 100);
+            glTranslatef((positionXref - 0.3) * -1, (positionYref - 0.9) * -1, (positionZref - 1) * -1);
+            protonsAmount = protonsAmount - 1;
+            protonsDrawed = protonsDrawed + 1;
+        }*/
             
         while(neutronsAmount > 0) {
+            
             //Neutron izquierda
             lightMaterialNeutrons();
             glTranslatef(positionXref - 0.6, positionYref - 0.8, positionZref);
@@ -41,11 +53,11 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
             }
             
             //Llamamos para que pinte protones alrededor
-            paintProtonsAndNeutronsRec(protonsAmount-protonsDrawed, neutronsAmount, size, (positionXref - 0.6) + 1.1, (positionYref - 0.8), positionZref + 0.6, protonsDrawed);
+            paintProtonsAndNeutronsRec(protonsAmount- (protonsDrawed - 1), neutronsAmount, size, (positionXref - 0.6) + 1.1, (positionYref - 0.8), positionZref + 0.6, protonsDrawed);
         }
         
-        //Llamamos para que pinte los protones restantes
-        paintProtonsAndNeutronsRec(protonsAmount-(protonsDrawed-1), neutronsAmount, size, (positionXref - 0.6) - 0.5, (positionYref - 0.1), positionZref, protonsDrawed);
+        //Llamamos para que pinte los protones restantes (hacemos dos llamadas para dividirlos en varios lugares y que no queden unidos).
+            paintProtonsAndNeutronsRec(protonsAmount- protonsDrawed, neutronsAmount, size, (positionXref - 0.6) - 0.5, (positionYref - 0.1), positionZref, protonsDrawed);
             
     } else if(neutronsAmount > 0) {
         lightMaterialNeutrons();
