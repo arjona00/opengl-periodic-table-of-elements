@@ -1,10 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////      
+///////////////////////////////////////////////////////////////////////////////////////////
 // lightAndMaterial1.cpp
-// 
+//
 // This program draws a blue sphere lit by two positional lights, one white and one green,
 // the location of each shown by a smaller wire sphere. Various material properties of the
 // sphere can be controlled and also the distance attenuation of the light.
-// 
+//
 // Interaction:
 // Press 'a/A' to decrease/increase the sphere's blue ambient reflectance.
 // Press 'd/D' to decrease/increase the sphere's blue diffuse reflectance.
@@ -15,7 +15,7 @@
 // Press the up/down arrow keys to move the sphere.
 //
 // Sumanta Guha.
-/////////////////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////////////////
 
 
 #include <iostream>
@@ -26,12 +26,14 @@
 #  include <GL/freeglut.h>
 #  include <OpenGL/glext.h>
 #else
-#  include <GL/glew.h>
+//#  include <GL/glew.h>
 #  include <GL/freeglut.h>
 #  include <GL/glext.h>
-#pragma comment(lib, "glew32.lib") 
+#pragma comment(lib, "glew32.lib")
 #endif
+
 #include "ElementosQuimicosBD.h"
+
 
 using namespace std;
 
@@ -44,7 +46,7 @@ static int animationPeriod = 100; // Time interval between frames.
 
 static float a = 1.0; // Blue ambient reflectance.
 static float d = 1.0; // Blue diffuse reflectance.
-static float s = 1.0; // White specular reflectance. 
+static float s = 1.0; // White specular reflectance.
 static float h = 50.0; // Shininess.
 static float e = 0.0; // Blue emittance.
 static float t = 0.0; // Quadratic attenuation factor.
@@ -54,14 +56,14 @@ static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection.
 
 // Routine to draw a bitmap character string.
 void writeBitmapString(void *font, char *string)
-{  
+{
    char *c;
 
    for (c = string; *c != '\0'; c++) glutBitmapCharacter(font, *c);
 }
 
 // Routine to convert floating point to char string.
-void floatToString(char * destStr, int precision, float val) 
+void floatToString(char * destStr, int precision, float val)
 {
    sprintf(destStr,"%f",val);
    destStr[precision] = '\0';
@@ -71,13 +73,13 @@ void floatToString(char * destStr, int precision, float val)
 void writeData(void)
 {
    glDisable(GL_LIGHTING); // Disable lighting.
-   glColor3f(1.0, 1.0, 1.0); 
-   
+   glColor3f(1.0, 1.0, 1.0);
+
    floatToString(theStringBuffer, 4, latAngle);
    glRasterPos3f(-1.0, 1.05, -2.0);
    writeBitmapString((void*)font, "Blue ambient reflectance: ");
    writeBitmapString((void*)font, theStringBuffer);
-   
+
    floatToString(theStringBuffer, 4, d);
    glRasterPos3f(-1.0, 1.0, -2.0);
    writeBitmapString((void*)font, "Blue diffuse reflectance: ");
@@ -85,12 +87,12 @@ void writeData(void)
 
    floatToString(theStringBuffer, 4, s);
    glRasterPos3f(-1.0, 0.95, -2.0);
-   writeBitmapString((void*)font, "White specular reflectance: ");  
+   writeBitmapString((void*)font, "White specular reflectance: ");
    writeBitmapString((void*)font, theStringBuffer);
 
    floatToString(theStringBuffer, 4, h);
    glRasterPos3f(-1.0, 0.9, -2.0);
-   writeBitmapString((void*)font, "Shininess: ");  
+   writeBitmapString((void*)font, "Shininess: ");
    writeBitmapString((void*)font, theStringBuffer);
 
    floatToString(theStringBuffer, 4, e);
@@ -136,7 +138,7 @@ void setup(void)
    float lightDifAndSpec0[] = { 0.8, 0.8, 0.8, 1.0 };
    float lightDifAndSpec1[] = { 0.0, 0.0, 0.3, 1.0 };
    float globAmb[] = { 0.2, 0.2, 0.2, 1.0 };
-   
+
    // Light0 properties.
    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDifAndSpec0);
@@ -146,7 +148,7 @@ void setup(void)
    glLightfv(GL_LIGHT1, GL_AMBIENT, lightAmb);
    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDifAndSpec1);
    glLightfv(GL_LIGHT1, GL_SPECULAR, lightDifAndSpec1);
-   
+
    glEnable(GL_LIGHT0); // Enable particular light source.
    glEnable(GL_LIGHT1); // Enable particular light source.
    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmb); // Global ambient light.
@@ -163,7 +165,7 @@ void setup(void)
 
 // Drawing routine.
 void drawScene()
-{  
+{
 
     // Light position vectors.
    float lightPos0[] = { 0.0, 2.0, 2.5, 1.0 };
@@ -306,7 +308,7 @@ void resize (int w, int h)
 // Keyboard input processing routine.
 void keyInput(unsigned char key, int x, int y)
 {
-   switch (key) 
+   switch (key)
    {
        case 27:
           exit(0);
@@ -372,28 +374,28 @@ void printInteraction(void)
 }
 
 // Main routine.
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
 
    printInteraction();
    glutInit(&argc, argv);
- 
+
    //glutInitContextVersion(4, 3);
    //glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
-   
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); 
    glutInitWindowSize (1024, 1024);
+
    glutInitWindowPosition (100, 100);
    glutCreateWindow ("elementsTableMain.cpp");
    glutDisplayFunc(drawScene);
    glutReshapeFunc(resize);
    glutKeyboardFunc(keyInput);
    glutSpecialFunc(specialKeyInput);
-   
+
    //glewExperimental = GL_TRUE;
    //glewInit();
-   
-   setup(); 
+
+   setup();
 
    glutMainLoop();
 }
