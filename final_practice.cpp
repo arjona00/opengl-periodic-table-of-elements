@@ -31,6 +31,7 @@
 #  include <GL/glext.h>
 #pragma comment(lib, "glew32.lib") 
 #endif
+#include "ElementosQuimicosBD.h"
 
 using namespace std;
 
@@ -50,14 +51,6 @@ static float t = 0.0; // Quadratic attenuation factor.
 static float zMove = 0.0; // z-direction component.
 static char theStringBuffer[10]; // String buffer.
 static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection.
-
-
-struct elenemt{
-    string name;
-    int protons;
-    int neutrons;
-    int electrons;
-};
 
 // Routine to draw a bitmap character string.
 void writeBitmapString(void *font, char *string)
@@ -163,8 +156,8 @@ void setup(void)
    glEnable(GL_CULL_FACE);
    glCullFace(GL_BACK);
 
-//   ElementosQuimicosBD elementos = ElementosQuimicosBD();
-//   elementos.loadBD(); //Cargamos los 30 elementos
+   ElementosQuimicosBD elementos = ElementosQuimicosBD();
+   elementos.loadBD(); //Cargamos los 30 elementos
 
 }
 
