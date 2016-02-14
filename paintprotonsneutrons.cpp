@@ -4,7 +4,7 @@
 using namespace std;
 
 
-void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float size, float positionXref, float positionYref, float positionZref, int protonsDrawed) {
+/*void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float size, float positionXref, float positionYref, float positionZref, int protonsDrawed) {
     
 
 
@@ -27,7 +27,7 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
             protonsDrawed = protonsDrawed + 1;
         }*/
             
-        while(neutronsAmount > 0) {
+        /*while(neutronsAmount > 0) {
             
             //Neutron izquierda
             lightMaterialNeutrons();
@@ -71,13 +71,82 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
         neutronsAmount = neutronsAmount - 1;
     }
 
-}
+}*/
 
 
 void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) {
     
     //En este caso solo llamamos para pintar el primero en la posición inicial
-    paintProtonsAndNeutronsRec(protonsAmount, neutronsAmount, size, 0.0, 0.0, 0.0, 0);
+    //paintProtonsAndNeutronsRec(protonsAmount, neutronsAmount, size, 0.0, 0.0, 0.0, 0);
+    
+    int positionXref = 0.0;
+    int positionYref = 0.0;
+    int positionZref = 0.0;
+    
+    for(int i=0; i<protonsAmount; i++) {
+        //Pintamos el protón
+        lightMaterialProtons();
+        glTranslatef(positionXref, positionYref, positionZref);
+        glutSolidSphere(size, 20, 20);
+        glTranslatef(positionXref * -1, positionYref * -1, positionZref * -1);
+        cout << "He pintado un protón" << endl;
+        
+        
+        //Pintamos varios neutrones por cada protón (ya que siempre hay más neutrones).
+        
+        if(neutronsAmount > 0) {
+            lightMaterialNeutrons();
+            glTranslatef(positionXref - 0.6, positionYref - 0.8, positionZref);
+            glutSolidSphere(size, 20, 20);
+            glTranslatef((positionXref - 0.6) * -1, (positionYref - 0.8) * - 1, positionZref * -1);
+            neutronsAmount = neutronsAmount - 1;
+        }
+        
+        if(neutronsAmount > 0) {
+            lightMaterialNeutrons();
+            glTranslatef(positionXref - 0.4, positionYref + 0.8, positionZref);
+            glutSolidSphere(size, 20, 20);
+            glTranslatef((positionXref - 0.5) * -1, (positionYref + 0.8) * - 1, positionZref * -1);
+            neutronsAmount = neutronsAmount - 1;
+        }
+        
+        if(neutronsAmount > 0) {
+            lightMaterialNeutrons();
+            glTranslatef(positionXref - 0.9, positionYref - 1.9, positionZref);
+            glutSolidSphere(size, 20, 20);
+            glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.8) * - 1, positionZref * -1);
+            neutronsAmount = neutronsAmount - 1;
+        }
+        
+        
+        if(neutronsAmount > 0) {
+            lightMaterialNeutrons();
+            glTranslatef(positionXref - 0.9, positionYref - 1.9, positionZref - 1.0);
+            glutSolidSphere(size, 20, 20);
+            glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.8) * - 1, (positionZref - 1.0) * -1);
+            neutronsAmount = neutronsAmount - 1;
+        }
+        
+        if(i < protonsAmount - 1) { //pintamos otro protón
+            lightMaterialProtons();
+            glTranslatef(positionXref, positionYref - 0.8, positionZref + 0.3);
+            glutSolidSphere(size, 20, 20);
+            glTranslatef(positionXref * -1, positionYref * -1, (positionZref) * -1);
+            cout << "He pintado un protón" << endl;
+            i = i + 1;
+        }
+        
+        //if(i % 2 == 0) { //Lo conecto al último neutrón
+            positionXref = (positionXref - 0.6) + 2.1;
+            positionYref = positionYref;
+            positionZref = positionZref + 0.1;
+        /*} else { //Lo conecto al primer neutrón
+            positionXref = (positionXref - 0.6) + 1.1;
+            positionYref = (positionYref - 0.8) - 0.2;
+            positionZref = positionZref;
+        }*/
+        
+    }
 
 }
 

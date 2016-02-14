@@ -246,7 +246,7 @@ void drawScene()
      Muy importante, si vais a pintar algo usar primero glTranslatef para colocar en la posición deseada, luego pintais el objeto
      y luego centrar con otro glTranslatef negativo. Si no hacemos esto es muy difícil centrar después las órbitas ya que los traslados glTranslatef se acumulan
      */
-
+    
     //Llamamos a la función que pinta los neutrones y protones según el número
     
     paintProtonsAndNeutrons(elementoActual.getProtones(), elementoActual.getNeutrones(), 0.6);
@@ -322,14 +322,14 @@ void keyInput(unsigned char key, int x, int y)
         case '+':
             id = elementoActual.getNumeroAtomico();
             id++;
-            if (id > 18) id = 1;
+            if (id > 30) id = 1;
             elementoActual = elementos.getElemento(id);
             glutPostRedisplay();
             break;
         case '-':
             id = elementoActual.getNumeroAtomico();
             id--;
-            if (id < 0) id = 18;
+            if (id < 0) id = 0;
             elementoActual = elementos.getElemento(id);
             glutPostRedisplay();
             break;
