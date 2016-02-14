@@ -246,19 +246,15 @@ void drawScene()
      Muy importante, si vais a pintar algo usar primero glTranslatef para colocar en la posición deseada, luego pintais el objeto
      y luego centrar con otro glTranslatef negativo. Si no hacemos esto es muy difícil centrar después las órbitas ya que los traslados glTranslatef se acumulan
      */
-    
-    glTranslatef(0.55, 0.0, 0.0); //Este ayuda a tener el sistema siempre centrado. Ahora mismo al meter más protones y neutrones no lo está
-    
-    
+
     //Llamamos a la función que pinta los neutrones y protones según el número
     
     paintProtonsAndNeutrons(elementoActual.getProtones(), elementoActual.getNeutrones(), 0.6);
     
-    glTranslatef(0.55, 0.0, 0.0); // Centra el sistema después de pintar los neutrones
     
     // Sphere.3 - electron
     float angles[3] = {latAngle, longAngle, longAngle};
-    paintElectrons(elementoActual.getElectrones(), 0.2, angles );
+    paintElectrons(elementoActual.getElectrones(), 0.1, angles );
     
     glutSwapBuffers();
     
@@ -355,6 +351,7 @@ void printInteraction(void)
 {
     cout << "Interaction:" << endl;
     cout << "Press space to toggle between animation on and off." << endl
+    << "Press the +/- keys to change element." << endl
     << "Press the up/down arrow keys to speed up/slow down animation." << endl
     << "Press the x, X, y, Y, z, Z keys to rotate the scene." << endl;
 }

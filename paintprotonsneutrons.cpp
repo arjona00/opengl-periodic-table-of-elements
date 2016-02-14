@@ -6,12 +6,15 @@ using namespace std;
 
 void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float size, float positionXref, float positionYref, float positionZref, int protonsDrawed) {
     
+
+
     //Caso base
     if(protonsAmount > 0) {
         lightMaterialProtons();
+
         //Coloco el central y lo resto
         glTranslatef(positionXref, positionYref, positionZref);
-        glutSolidSphere(size, 100, 100);
+        glutSolidSphere(size, 20, 20);
         glTranslatef(positionXref * -1, positionYref * -1, positionZref * -1);
         protonsAmount = protonsAmount - 1;
         protonsDrawed = protonsDrawed + 1;
@@ -29,7 +32,7 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
             //Neutron izquierda
             lightMaterialNeutrons();
             glTranslatef(positionXref - 0.6, positionYref - 0.8, positionZref);
-            glutSolidSphere(size, 100, 100);
+            glutSolidSphere(size, 20, 20);
             glTranslatef((positionXref - 0.6) * -1, (positionYref - 0.8) * - 1, positionZref * -1);
             neutronsAmount = neutronsAmount - 1;
             
@@ -37,7 +40,7 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
                 //Neutron a la derecha
                 lightMaterialNeutrons();
                 glTranslatef(positionXref - 0.5, positionYref + 0.8, positionZref);
-                glutSolidSphere(size, 100, 100);
+                glutSolidSphere(size, 20, 20);
                 glTranslatef((positionXref - 0.5) * -1, (positionYref + 0.8) * - 1, positionZref * -1);
                 neutronsAmount = neutronsAmount - 1;
             }
@@ -47,7 +50,7 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
                 //Neutron arriba
                 lightMaterialNeutrons();
                 glTranslatef(positionXref - 0.9, positionYref - 1.8, positionZref);
-                glutSolidSphere(size, 100, 100);
+                glutSolidSphere(size, 20, 20);
                 glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.8) * - 1, positionZref * -1);
                 neutronsAmount = neutronsAmount - 1;
             }
@@ -67,14 +70,14 @@ void paintProtonsAndNeutronsRec(int protonsAmount, int neutronsAmount, float siz
         glTranslatef((positionXref - 0.6) * -1, (positionYref - 0.2) * -1, positionZref * -1);
         neutronsAmount = neutronsAmount - 1;
     }
+
 }
 
 
 void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) {
     
     //En este caso solo llamamos para pintar el primero en la posición inicial
-    
-    paintProtonsAndNeutronsRec(protonsAmount, neutronsAmount, size, -1.0, 0.0, 0.0, 0);
+    paintProtonsAndNeutronsRec(protonsAmount, neutronsAmount, size, 0.0, 0.0, 0.0, 0);
 
 }
 
