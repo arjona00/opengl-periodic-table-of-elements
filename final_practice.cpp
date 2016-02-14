@@ -322,14 +322,14 @@ void keyInput(unsigned char key, int x, int y)
         case '+':
             id = elementoActual.getNumeroAtomico();
             id++;
-            if (id > 30) id = 30;
+            if (id > 18) id = 1;
             elementoActual = elementos.getElemento(id);
             glutPostRedisplay();
             break;
         case '-':
             id = elementoActual.getNumeroAtomico();
             id--;
-            if (id < 0) id = 0;
+            if (id < 0) id = 18;
             elementoActual = elementos.getElemento(id);
             glutPostRedisplay();
             break;
