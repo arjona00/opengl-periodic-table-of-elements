@@ -1,21 +1,67 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-// lightAndMaterial1.cpp
+///////////////////////////////////////////////////////////////////////////////////////
 //
-// This program draws a blue sphere lit by two positional lights, one white and one green,
-// the location of each shown by a smaller wire sphere. Various material properties of the
-// sphere can be controlled and also the distance attenuation of the light.
 //
-// Interaction:
-// Press 'a/A' to decrease/increase the sphere's blue ambient reflectance.
-// Press 'd/D' to decrease/increase the sphere's blue diffuse reflectance.
-// Press 's/S' to decrease/increase the sphere's white specular reflectance.
-// Press 'h/H' to decrease/increase the sphere's shininess.
-// Press 'e/E' to decrease/increase the sphere's blue emittance.
-// Press 't/T' to decrease/increase the quadratic attenuation parameter.
-// Press the up/down arrow keys to move the sphere.
+// Antonio Jesús Arjona Rodríguez
+// José Alberto García Pinteño
+// Tatiana Person Montero
 //
-// Sumanta Guha.
-///////////////////////////////////////////////////////////////////////////////////////////
+// Práctica final: Simulación del átomo de un elemento químico (del número atómico 1 al
+// 18).
+// Computación gráfica - Máster en Ingeniería Informática
+// Curso 2015/2016
+//
+// Repartición de las tareas:
+//
+// En primer lugar, para poder compartir el trabajo y el código fuente, hemos creado
+// un repositorio en GitHub, con esto también pretendemos tener un respaldo del trabajo
+// realizado por cada miembro del equipo. Aunque realmente, todos hemos participado en
+// las tareas de todos (aportando ideas y/o soluciones) para poder llegar a la versión
+// final. Posteriormente, se muestra el desglose de tareas que se han llevado a cabo:
+//
+// 1 - Planteamiento del problema: En este paso, acordamos el ámbito que se iba a
+// abarcar en la práctica. Como nuestro grupo estaba compuesto por tres personas,
+//  acordamos generalizar el problema, es decir, realizar funciones que pintaran
+// electrones en sus órbitas, y protones y neutrones unidos de tal forma que para cada
+// elemento solo tuvieramos que realizar una simple llamada de la forma
+// funcion(numeroDeObjetosAPintar) y que realizara el trabajo automáticamente para
+// cualquier número.
+//
+// 2 - Representación de un elemento químico: En esta tarea, se ha realizado la
+// implementación de las clases ElementoQuimico y ElementoQuimicoBD. La primera clase
+// es la encargada de definir la estructura de un elemento químico recogiendo su
+// información más relevante (número de protones, electrones y neutrones, masa atómica
+// y número atómico). Por otro lado, la segunda clase es la encargada de crear una
+// serie de elementos químicos (desde el número atómico 1 hasta el 30) y cargarlos en
+// un vector para poderlos utilizar desde el programa principal.
+//
+// 3 - Colocación de electrones: En esta tarea, como se ha comentado anteriormente, se
+// ha realizado una función que pinta electrones en sus órbitas automáticamente
+// utilizando el número de los que se quiere pintar.
+
+// 4 - Colocación de neutrones y protones: En esta tarea, al igual que en la anterior,
+// se ha realizado una función que pinta neutrones y protones en conjunto
+// automáticamente utilizando el número de los que se quiere pintar. En este caso, la
+// dificultad encontrada ha sido reorganizar los protones y neutrones de tal forma que
+// esten mezclados y en la que el crecimiento de la estructura que forman no fuese
+// lineal. Finalmente, se ha conseguido realizar un mayor entrelazado entre éstos, pero
+// el crecimiento sigue siendo lineal, ya que la repartición se realiza mediante un
+// bucle (antes se realizó una versión recursiva pero la recursividad disminuía el
+// rendimiento de la aplicación) y todas las iteraciones mantienen un mismo patrón.
+// Por este motivo, se ha limitado el número atómico del elemento simulado hasta 18
+// finalmente.
+//
+// 5 - Configuración de texturas y luces: Se ha realizado una configuración de las
+// esferas que representan los protones, neutrones y electrones, de tal forma de que
+// fuese descriptivo (siguiendo la "nomenclatura" aplicada en casi todas las webs o
+// libros) y de que se pudieran diferenciar facilmente. En este caso:
+//
+//  a) Protones -> esferas de color rojo de 20px.
+//  b) Neutrones -> esferas de color blanco de 20px.
+//  c) Electrones -> esferas de color azul de 10px.
+//
+// Repositorio git: https://github.com/arjona00/opengl-periodic-table-of-elements/tree/20160214_VersionFinal
+//
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 #include <ostream>
@@ -322,7 +368,7 @@ void keyInput(unsigned char key, int x, int y)
         case '+':
             id = elementoActual.getNumeroAtomico();
             id++;
-            if (id > 30) id = 1;
+            if (id > 18) id = 1;
             elementoActual = elementos.getElemento(id);
             glutPostRedisplay();
             break;

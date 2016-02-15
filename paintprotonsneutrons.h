@@ -1,3 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////////////
+//
+//
+// Antonio Jesús Arjona Rodríguez
+// José Alberto García Pinteño
+// Tatiana Person Montero
+//
+// Práctica final: Simulación del átomo de un elemento químico (del número atómico 1 al
+// 18).
+// Computación gráfica - Máster en Ingeniería Informática
+// Curso 2015/2016
+//
+///////////////////////////////////////////////////////////////////////////////////////
+
 #ifndef PAINTPROTONSNEUTRONS_H
 #define PAINTPROTONSNEUTRONS_H
 

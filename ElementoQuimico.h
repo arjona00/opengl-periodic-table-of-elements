@@ -1,10 +1,16 @@
+///////////////////////////////////////////////////////////////////////////////////////
 //
-//  ElementoQuimico.h
-//  Elementos_Quimicos
 //
-//  Created by Taty Person on 12/2/16.
-//  Copyright © 2016 Tatiana Person Montero. All rights reserved.
+// Antonio Jesús Arjona Rodríguez
+// José Alberto García Pinteño
+// Tatiana Person Montero
 //
+// Práctica final: Simulación del átomo de un elemento químico (del número atómico 1 al
+// 18).
+// Computación gráfica - Máster en Ingeniería Informática
+// Curso 2015/2016
+//
+///////////////////////////////////////////////////////////////////////////////////////
 
 
 #include<iostream>
