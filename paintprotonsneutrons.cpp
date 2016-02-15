@@ -120,7 +120,7 @@ void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) 
             lightMaterialNeutrons();
             glTranslatef(positionXref - 0.4, positionYref + 0.8, positionZref);
             glutSolidSphere(size, 20, 20);
-            glTranslatef((positionXref - 0.5) * -1, (positionYref + 0.8) * - 1, positionZref * -1);
+            glTranslatef((positionXref - 0.4) * -1, (positionYref + 0.8) * - 1, positionZref * -1);
             neutronsAmount = neutronsAmount - 1;
         }
         
@@ -128,7 +128,7 @@ void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) 
             lightMaterialNeutrons();
             glTranslatef(positionXref - 0.9, positionYref - 1.9, positionZref);
             glutSolidSphere(size, 20, 20);
-            glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.8) * - 1, positionZref * -1);
+            glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.9) * - 1, positionZref * -1);
             neutronsAmount = neutronsAmount - 1;
         }
         
@@ -137,7 +137,7 @@ void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) 
             lightMaterialNeutrons();
             glTranslatef(positionXref - 0.9, positionYref - 1.9, positionZref - 1.0);
             glutSolidSphere(size, 20, 20);
-            glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.8) * - 1, (positionZref - 1.0) * -1);
+            glTranslatef((positionXref - 0.9) * -1, (positionYref - 1.9) * - 1, (positionZref - 1.0) * -1);
             neutronsAmount = neutronsAmount - 1;
         }
         
@@ -145,7 +145,7 @@ void paintProtonsAndNeutrons(int protonsAmount, int neutronsAmount, float size) 
             lightMaterialProtons();
             glTranslatef(positionXref, positionYref - 0.8, positionZref + 0.3);
             glutSolidSphere(size, 20, 20);
-            glTranslatef(positionXref * -1, positionYref * -1, (positionZref) * -1);
+            glTranslatef(positionXref * -1, (positionYref - 0.8) * -1, (positionZref + 0.3) * -1);
             cout << "He pintado un protón" << endl;
             i = i + 1;
         }
